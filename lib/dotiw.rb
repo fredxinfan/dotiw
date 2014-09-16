@@ -8,8 +8,6 @@ end # DOTIW
 module ActionView
   module Helpers
     module DateHelper
-      alias_method :old_distance_of_time_in_words, :distance_of_time_in_words
-
       def distance_of_time_in_words_hash(from_time, to_time, options = {})
         from_time = from_time.to_time if !from_time.is_a?(Time) && from_time.respond_to?(:to_time)
         to_time   = to_time.to_time   if !to_time.is_a?(Time)   && to_time.respond_to?(:to_time)
@@ -22,7 +20,7 @@ module ActionView
         display_time_in_words DOTIW::TimeHash.new(seconds).to_hash, options
       end
 
-      def distance_of_time_in_words(from_time, to_time, include_seconds = false, options = {})
+      def exact_distance_of_time_in_words(from_time, to_time, include_seconds = false, options = {})
         options[:include_seconds] = include_seconds
         return old_distance_of_time_in_words(from_time, to_time, include_seconds, options) if options.delete(:vague)
         hash = distance_of_time_in_words_hash(from_time, to_time, options)
@@ -36,12 +34,9 @@ module ActionView
         number_with_precision(result, options).to_s + "%"
       end
 
-      alias_method :old_time_ago_in_words, :time_ago_in_words
-
-      def time_ago_in_words(from_time, include_seconds = false, options = {})
+      def exact_time_ago_in_words(from_time, include_seconds = false, options = {})
         distance_of_time_in_words(from_time, Time.now, include_seconds, options)
       end
-
 
       private
         def display_time_in_words(hash, options = {})
