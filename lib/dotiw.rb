@@ -19,7 +19,6 @@ module DOTIW
     I18n.load_path.unshift(*locale_files)
     I18n.reload!
   end
-end # DOTIW
 
 protected
   # Returns all locale files shipped with library
